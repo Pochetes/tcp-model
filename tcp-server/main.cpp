@@ -18,6 +18,15 @@ int main() {
     }
     
     /* bind the socket to a IP / port */
+    sockaddr_in hint;
+    hint.sin_family = AF_INET;
+    hint.sin_port = htons(54000);
+    inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
+
+    if(bind(listening, (sockaddr*)&hint, sizeof(hint)) == -1) {
+        cerr << "can't bind to IP/port";
+        return -2;
+    }
     /* mark the socket for listening in */
     /* accept a call */
     /* close the listening socket */
