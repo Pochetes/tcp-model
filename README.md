@@ -24,3 +24,18 @@ telnet localhost <PORT>
 And now you can echo the client's messages back!
 
 ![Tcp Gif](images/tcpgif.gif)
+
+### Using the Client Interface
+
+Alternatively, you can build the same version of `telnet` to connect to the server.
+
+To run the client, `cd tcp-client`. Use `make` to compile the program and run the executable like so:
+
+```
+./client
+```
+
+A command line interface will pop up asking the user to provide a message to send to the server. The following is demonstrated like so:
+
+![Tcp Gif2](images/tcpgif2.gif)
+
