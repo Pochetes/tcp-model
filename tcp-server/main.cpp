@@ -9,6 +9,7 @@
 
 using namespace std;
 
+#define PORT 54000
 #define MAXBUFSIZE 4096
 
 int main() {
@@ -22,7 +23,7 @@ int main() {
     /* bind the socket to a IP / port */
     sockaddr_in hint;
     hint.sin_family = AF_INET;
-    hint.sin_port = htons(54000);
+    hint.sin_port = htons(PORT);
     inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
 
     if(bind(listening, (sockaddr*)&hint, sizeof(hint)) == -1) {
@@ -64,9 +65,9 @@ int main() {
     /* while receiving - display & echo message */
     char buf[MAXBUFSIZE];
     while(true) {
-        // clear the buffer
+        /* clear the buffer */
         memset(buf, 0, MAXBUFSIZE);
-        // wait for a message
+        /* wait for a message */
         int bytesReceived = recv(clientSocket, buf, MAXBUFSIZE, 0);
         if(bytesReceived == -1) {
             cerr << "there was a connection issue" << endl;
@@ -77,9 +78,9 @@ int main() {
             cout << "the client disconnected" << endl;
             break;
         }
-        // display message
+        /* display message */
         cout << "Received: " << string(buf, 0, bytesReceived) << endl;
-        // resend message
+        /* resend message */
         send(clientSocket, buf, bytesReceived + 1, 0);
     }
     /* close socket */

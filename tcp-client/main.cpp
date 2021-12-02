@@ -14,12 +14,12 @@ using namespace std;
 #define IP "127.0.0.1"
 
 int main() {
-    // create a socket
+    /* create a socket */
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if(sock == -1) {
         return 1;
     }
-    // create a hint structure for the server we're connecting with
+    /* create a hint structure for the server we're connecting with */
     string ipAddress = IP;
 
     sockaddr_in hint;
@@ -27,20 +27,20 @@ int main() {
     hint.sin_port = htons(PORT);
     inet_pton(AF_INET, ipAddress.c_str(), &hint.sin_addr);
     
-    // connect to the server on the socket
+    /* connect to the server on the socket */
     int connectRes = connect(sock, (sockaddr*)&hint, sizeof(hint));
     if(connectRes == -1) {
         return 2;
     }
 
-    char buf[4096];
+    char buf[MAXBUFSIZ];
     string userInput;
 
     do {
         cout << "> ";
         getline(cin, userInput);
 
-        // send to the server
+        /* send to the server */
         int sendRes = send(sock, userInput.c_str(), userInput.size() + 1, 0);
         if(sendRes == -1) {
             cout << "could not send to server!\r\n";
@@ -50,12 +50,12 @@ int main() {
         memset(buf, 0, MAXBUFSIZ);
         int bytesReceived = recv(sock, buf, MAXBUFSIZ, 0);
 
-        // display response
+        /* display response */
         cout << "SERVER> " << string(buf, bytesReceived) << "\r\n";
 
     } while(true);
 
-    // close the socket
+    /* close the socket */
     close(sock);
 
     return 0;
