@@ -27,7 +27,12 @@ int main() {
         cerr << "can't bind to IP/port";
         return -2;
     }
+
     /* mark the socket for listening in */
+    if(listen(listening, SOMAXCONN) == -1) {
+        cerr << "can't listen!";
+        return -3;
+    }
     /* accept a call */
     /* close the listening socket */
     /* while receiving - display & echo message */
